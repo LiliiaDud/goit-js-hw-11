@@ -3,6 +3,7 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import 'loaders.css/loaders.min.css';
 
 const gallery = document.querySelector(".gallery");
+const submitButton = document.querySelector('button[type="submit"]');
 const loader = document.querySelector(".loader");
 
 const lightbox = new SimpleLightbox('.gallery a', {
@@ -37,9 +38,11 @@ export function clearGallery() {
 }
 //показу індикатор завантаження
 export function showLoader() {
+  submitButton.classList.add("hidden");
   loader.classList.remove("hidden");
 }
 //приовую індикатор завантаження
 export function hideLoader() {
   loader.classList.add("hidden");
+  submitButton.classList.remove("hidden");
 }
