@@ -7,8 +7,10 @@ import { createGallery, clearGallery, showLoader, hideLoader } from "./js/render
 const form = document.querySelector(".form");
 const messageDefaults = { position: 'topRight', timeout: 2000 };
 
-form.addEventListener("submit", async (event) => {
-    event.preventDefault(); // не перезавантажуємо сторінку
+form.addEventListener("submit", handlerSubmit);
+
+function handlerSubmit(event) {
+  event.preventDefault();
     
     const query = event.target.elements["search-text"].value.trim();
   //Якщо рядок пустий
@@ -20,13 +22,12 @@ form.addEventListener("submit", async (event) => {
     });
     return;
   }
-//очищаємо DOM
+//очищаємо DOM і показуємо loader
     clearGallery();
     showLoader();
 
     getImagesByQuery(query)
     .then(data => {
-      // const { hits = [] } = data || {};
       const { hits } = data;
 
       if (hits.length === 0) {
@@ -36,20 +37,6 @@ form.addEventListener("submit", async (event) => {
         });
         return;
       }
-        /*
-    getImagesByQuery(query)
-    .then(data => {
-      const hits = Array.isArray(data?.hits) ? data.hits : [];
-
-      if (hits.length === 0) {
-        iziToast.info({
-          title: 'No results',
-          message: 'Sorry, there are no images matching your search query. Please try again!',
-          position: 'topRight',
-          timeout: 2000,
-        });
-        return;
-      }*/
 
       createGallery(hits);
 
@@ -58,7 +45,7 @@ form.addEventListener("submit", async (event) => {
         message: `Found ${hits.length} images for "${query}".`,
       });
     })
-    .catch(err => {
+    .catch(() => {
       iziToast.error({
         ...messageDefaults,
         title: 'Error',
@@ -69,4 +56,4 @@ form.addEventListener("submit", async (event) => {
       hideLoader();
       form.reset();
     });
-})
+}
