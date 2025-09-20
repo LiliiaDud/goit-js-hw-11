@@ -21,12 +21,7 @@ body {
   flex-direction: column;
   min-width: 100vw;
   min-height: 100vh;
-  margin: 0;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-main {
-  flex-grow: 1;
-}
-main:has(.back-link) {
-  text-align: center;
-}
